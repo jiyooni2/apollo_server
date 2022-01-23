@@ -1,0 +1,104 @@
+Prisma, Apollo
+
+3. Setup GraphQL Server
+graphql-yoga
+    Code 사용량 적음
+    runs on top apollo server
+
+Apollo-server
+    almost like graphql-yoga(through update)
+
+Babel
+    package.json에서 type : "module"도 가능
+    최신 JS 문법 사용, transform to JS code
+    
+    npm install --save-dev @babel/core @babel/preset-env
+    npm install @babel/node --save-dev
+    nodemon --exec babel-node server.js
+        babel-node : console에서 js파일 실행시키는 역할
+
+    노드가 낮은 버전이든 높은 버전이든 상관없이 babel 이 컴파일 해줌
+    production단계에서 사용하지 않음 웹사이트를 publish했을 떄는 쓰지 않음
+    그 단계에서는 이미 컴파일되어서 정상 JS코드로 변환
+    
+Mutation
+    resolver들이 기본적으로 가지는 arguments
+    (root,args,context,info)
+    root : parent
+    args : query의 args
+    context : an object shared across all resolvers that are for a particular operation
+              share operation state
+    info : operation's execution state
+        ex) field name, path name and so on
+    
+
+    mutation{
+        createMovie(title:"args")
+    }
+    
+
+Prisma
+    JS code 작성하면 Prisma가 DB랑 소통해줌
+    generate client, 클라이언트를 통해 JS와 DB 소통
+    
+    Setup
+        npm install prisma -D
+        npx prisma init
+
+postgreSQL
+    추가적으로 더 setup하고싶은 기능 있으면 stack builder
+    pw : pg2017920017
+    .env에서 URL바꾸기
+
+    ORM(Object Relational Mapper)
+        데이터소스를 지님, 데이터베이스와 대화
+        데이터소스 = 데이터베이스의 주소와 종류 알려줌
+    
+    client
+        어떤방식으로 DB와 상호작용
+
+    prisma migrate
+        .prisma파일에 데이터모델을 쓰고 설명할 수 있게 해줌
+        @id : 모델의 id임을 전달하기 위함
+        이 모델을 DB에 넣기 위해 사용
+            npx prisma migrate dev
+            dev : 자동으로 생성된 prisma client 얻음
+        prisma migrate DB의 형태 변형시켜줌
+        dev명령어와 함께 실행하면 자동으로 client 생성
+        prisma SQL code로 변환시켜줌
+        
+    prisma client
+        우리의 스키마에 맞추어서 prisma client 생성
+        client에 대한 여러 명령어들을 그냥 볼 수 있음
+
+        
+in postgreSQL : default required (set not required : ?)
+in GraphQL : default not required (set required : !)
+    postgreSQL의 스키마와 graphQL의 typedef를 일치시켜줘야함!
+
+
+Prisma studio
+    데이터를 위한 시각적 에디터
+    DB의 모델들을 위한 시각적 에디터(엑셀 보는 느낌)
+    npx prisma studio
+
+server
+    Query, Mutation 분할, not push in one file
+    using gql in "apollo-server", graphql 파일에 저장하는것과 같은 효과
+    domain별로 divide and conquer
+    Movie -> Movie type, resolver 모아서
+
+graphql-tools
+    각 mutation, queries, typedefs 다 모으기 위한 tool
+    npm i @graphql-tools/schema
+    npm i @graphql-tools/load-files
+    npm i @graphql-tools/merge
+
+    glob, pattern language사용
+        ** : 모든 폴더 안
+        * : 모든 파일
+        
+dotenv
+    app의 모든것의 맨 위에서 즉시 실행해야 함
+    .env를 읽기 위해서 사용
+    process.env.variable 로 환경변수 접근
