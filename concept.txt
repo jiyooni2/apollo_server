@@ -7,6 +7,7 @@ graphql-yoga
 
 Apollo-server
     almost like graphql-yoga(through update)
+    npm install apollo-server
 
 Babel
     package.json에서 type : "module"도 가능
@@ -14,6 +15,8 @@ Babel
     
     npm install --save-dev @babel/core @babel/preset-env
     npm install @babel/node --save-dev
+    +babel.config.json
+    
     nodemon --exec babel-node server.js
         babel-node : console에서 js파일 실행시키는 역할
 
@@ -66,6 +69,7 @@ postgreSQL
         prisma migrate DB의 형태 변형시켜줌
         dev명령어와 함께 실행하면 자동으로 client 생성
         prisma SQL code로 변환시켜줌
+        prisma schema 변할 때마다 반드시 migrate
         
     prisma client
         우리의 스키마에 맞추어서 prisma client 생성
@@ -102,3 +106,10 @@ dotenv
     app의 모든것의 맨 위에서 즉시 실행해야 함
     .env를 읽기 위해서 사용
     process.env.variable 로 환경변수 접근
+
+prisma의 schema와 typeDefs synchronize
+
+DB에러를 마주하는 건 제일 마지막 안전장치
+코드에서 반드시 확인해서 서버비용을 줄여야함
+
+using hashing function, encrypt the password
