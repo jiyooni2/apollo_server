@@ -113,3 +113,110 @@ DB에러를 마주하는 건 제일 마지막 안전장치
 코드에서 반드시 확인해서 서버비용을 줄여야함
 
 using hashing function, encrypt the password
+
+findUnique
+    unique한 필드만 찾아봄 
+
+
+JWT
+    userid를 가져와서 토큰에 signature
+    token을 유저에게 보냄, 유저는 브라우저,앱,데스크톱앱 등 모든곳에 사용
+    서버에서 토큰을 받으면 토큰이 갖고있는 id확인 후 우리가 서명한 토큰인지 확인
+    유저는 토큰을 백엔드에 request할때 항상 같이 보내줌
+
+    npm install jsonwebtoken
+
+    token은 서버가 프론트엔드에 연결되어 있지 않거나 따로 떨어진 경우 주로 사용
+
+
+    sign = 발행하는 것과 같음
+    jwt.sign(payload,secretOrPrivateKey)
+        payload : 우리가 토큰에 넣게 되는 것
+        token은 누구나 볼 수 있기 때문에, public 정보를 넣어야함
+
+    expires 가능
+
+resolvers, typeDefs만 모아서 아키텍쳐 설계
+
+prisma에 undefined값을 업데이트하라고 보내면, 그 값으로 업데이트 하지 않음, 유지
+
+Spread Operator
+    ...(password && { password: await bcrypt.hash(password, 5) })
+        if password is true, password: await~
+
+HTTP headers
+    http header에 token을 넣으면 유저가 자동적으로 req object header에 token넣어서 요청
+
+resolvers args : root,args,context,info
+    context : 모든 resolver에서 접근 가능, token을 context에 넣자!
+    어디에서 set context?   모든 resolver에서 접근 가능해야하니까,
+        > Apollo Server
+
+Token이 필요한 resolvers protect 하기 위해서?
+    모든 resolver에 코드 시작 부분에 붙혀넣는 건 지양
+    1.login 인증 과정을 쓰는 모든 부분에서 import
+    2.context에 넣어줌
+    3.return 하는 error값을 우리의 형식에 맞추기 위해 currying
+        (함수가 함수 리턴하는 형식)
+    
+
+file upload
+    apollo server에서 typeDefs, resolvers 따로 설정해야
+    apollo server에서 지원하는 upload scalar 쓸 수 있음
+    test tool : altire
+
+    file upload해주면, return Promise
+    유저는 서버에 파일을 업로드하면 서버는 파일을 AWS에 업로드 AWS는 URL을 줌
+    실무에서는 서버에 파일을 저장하지 않음
+
+apollo-server-express
+    URL + graphql server
+    apollo-server를 사용하되, /graphql URL에서 사용하는 것
+    npm i express apollo-server-express
+    
+    express의 여러 기능(REST API,미들웨어,static 등) 사용 가능
+    
+playground
+    schema 바뀐거 있는지 보려고 polling
+    development 과정에서만 매초마다 request 보냄
+
+Relation
+    field에 관계를 추가
+    self-Relation
+        A following -> B follower +1
+    followers update automatically
+    using connect, disconnect
+
+Relation
+    expensive info
+    too many...
+    not load all at the first time, DB 과부하
+    전체를 다 로드할 수 있음
+        include 사용
+    
+Pagination
+    1 page 정도씩 보여줌
+
+offset Pagination
+    item의 특정 분량을 skip하고 특정 분량을 get
+    skip, take
+    take을 page와 연관지어서 설정하면, Pagination 가능
+    2000 page을 보려면 그 앞의 데이터를 다 가져와야함
+
+cursor based Pagination
+    마지막으로 본 데이터(cursor)를 보내줌
+    1 2 3 4 5
+    cursor : 1, take:4
+    [1,2,3,4] get
+    cursor should be unique
+    특정 페이지로 바로 이동하기 힘듬
+    무제한 스크롤 페이지에 유용
+
+Computed Fields
+    Query뿐만 아니라 Type에 대해서도 resolver를 만들 수 있음
+    graphql은 DB에 없는 필드에 접근하면, resolve시도, resolver call
+
+    root
+        자신을 불렀던 애를 쓸 수 있음
+
+
