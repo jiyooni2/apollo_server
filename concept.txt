@@ -186,6 +186,7 @@ Relation
         A following -> B follower +1
     followers update automatically
     using connect, disconnect
+    connect : connect that record to existing records
 
 Relation
     expensive info
@@ -220,3 +221,31 @@ Computed Fields
         자신을 불렀던 애를 쓸 수 있음
 
 
+following,followers: [User]
+    can use the function followers(), following()
+    
+
+Prisma Relation
+    Relation fields define connections between models at the Prisma level, not exist in the DB
+    These fields are used to generate the Prisma client
+    author     User        @relation(fields: [authorId], references: [id])
+    author 은 User type이고, authorID를 필드로 갖고있으며, id를 참조하는 외래키
+    authorId는 DB쪽에서만 필요, graphql 은 필요 X, typedefs에 추가안함
+
+    relation이 DB에 없으니까, resolver를 통해서 접근 / include를 통해서 접근
+    include를 통해서 접근하면 그 필드를 호출하던 말던 일단 가져옴
+    resolver는 요청할때에만, 전처리도 가능
+    관계는 비싼 연산이어서 null을 return
+
+
+arguments in field
+    photos(page:Int!): [Photo]
+
+typeDefs, resolvers => for graphQL, query
+    모든 걸 다 포함시킬 필요가 없음
+
+백엔드, 프론트엔드, 모두 방어수단을 두자
+
+@@unique(A,B) : A,B 필드를 unique하게 가짐(DB랑 같음)
+    findUnique에서 A_B라는 필드를 지정할 수 있음
+    

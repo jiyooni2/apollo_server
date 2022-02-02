@@ -5,22 +5,14 @@ export default {
     totalFollowing: ({ id }) => {
       return client.user.count({
         where: {
-          followers: {
-            some: {
-              id,
-            },
-          },
+          followers: { some: { id } },
         },
       });
     },
     totalFollowers: () => {
       return client.user.count({
         where: {
-          following: {
-            some: {
-              id,
-            },
-          },
+          following: { some: { id } },
         },
       });
     },
@@ -30,5 +22,17 @@ export default {
       }
       return id === loggedInUser.id;
     },
+    isFollowing: async ({ id }, _, { loggedInUser }) => {
+      if (!loggedInUser || loggedInUser.isMe) {
+        return false;
+      }
+
+      const exists = await client.user.count({
+        where: { username: loggedInUser.username, following: { some: { id } } },
+      });
+
+      return Boolean(exists);
+    },
+    photos: ({ id }) => client.user.findUnique({ where: { id } }).photos(),
   },
 };
