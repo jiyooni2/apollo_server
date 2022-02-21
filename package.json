@@ -20,7 +20,6 @@
     "apollo-server": "^2.25.2",
     "apollo-server-express": "2.19",
     "bcrypt": "^5.0.1",
-    "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "graphql": "^15.8.0",
     "jsonwebtoken": "^8.5.1",
@@ -29,6 +28,7 @@
   "devDependencies": {
     "@babel/core": "^7.16.10",
     "@babel/preset-env": "^7.16.11",
+    "dotenv": "^16.0.0",
     "nodemon": "^2.0.15",
     "prettier-plugin-prisma": "^3.9.0",
     "prisma": "^3.8.1"

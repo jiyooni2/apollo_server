@@ -249,3 +249,71 @@ typeDefs, resolvers => for graphQL, query
 @@unique(A,B) : A,B 필드를 unique하게 가짐(DB랑 같음)
     findUnique에서 A_B라는 필드를 지정할 수 있음
     
+
+
+A모델에서 B모델에 대해 관계를 맺으면, B모델에서 A모델은 자동으로 관계가 맺힘
+B모델에서 A모델에 대해 where을 쓸 수 있음
+Query는 prisma(DB)기준으로 실행됨, typeDef기준이 아님
+
+관계맺은 필드에 대해서 select를 한다면 그것만 가져오고
+include한다면 그것을 포함한 전부를 가져옴
+관계에 대한 연산은 비싼 연산이어서, include나 select를 쓰지 않으면 포함안됨
+
+
+
+
+FrontEnd
+    npx create-react-app
+        npm+execute
+        don't have to install create-react-app just execute
+    
+
+
+
+
+
+
+
+
+
+
+
+
+Deployment
+    1.모든 걸 src폴더로 넣음(prisma,node modules,package.json,babel.config.json빼고)
+    2.package.json command 경로 변경
+    3.npm install -D babel-cli 
+        package.json 
+        build : "babel src --out-dir build"
+            build folder에 압축되고, babel로 바뀐 코드 넣어짐
+        start : node build/server
+            regeneratorRuntime 설치(in front, async~await 사용 가능)
+            npm install @babel/plugin-transform-runtime
+                babel.config.json plugins 설정
+    
+Heroku CLI
+    다운로드 후, heroku login
+    deploy할때마다, 모든 걸 다시 받음, img의 url을 올리는 이유(다 다시 다운로드)
+    dev-dependencies 는 다운 안받으니까, module없다고 뜨면 dependencies로 옮기기
+    build한 다음에, 다시 git push heroku master
+
+Configuring Databases
+    Settings에서 Config vars설정
+    postgres add-on 등록
+    새로운 DB에 migrate
+        prisma migrate deploy
+        heroku를 위한 config file인 (Procfile) 생성
+        release: npx prisma migrate deploy
+        web: npm start
+
+FrontEnd Deployment
+    netlify
+    
+    실행 명령어 npm run build, publish directory:build/
+
+const httpLink = createHttpLink({
+    url:process.env.NODE_ENV ==="production"?
+    "herokuApp-URL":"http://localhost:4000/graphql";
+})
+
+Router 오류가 날건데, 수정을 해줘야 함

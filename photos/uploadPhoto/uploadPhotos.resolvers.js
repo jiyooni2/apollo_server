@@ -1,6 +1,6 @@
 import { protectedResolver } from "../../users/users.utils";
 import client from "../../client";
-import { processHashtag } from "./../../.history/photos/photos.utils_20220202180501";
+import { processHashtag } from "../photos.utils";
 
 export default {
   Mutation: {

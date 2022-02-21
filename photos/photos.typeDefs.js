@@ -24,5 +24,6 @@ export default gql`
     photo: Photo!
     createdAt: String!
     updateAt: String!
+    user: User!
   }
 `;
