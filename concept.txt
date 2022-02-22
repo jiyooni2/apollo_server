@@ -33,6 +33,7 @@ Mutation
               share operation state
     info : operation's execution state
         ex) field name, path name and so on
+        연산 종류가 쿼리인지 뮤테이션인지 알 수 있음
     
 
     mutation{
@@ -259,6 +260,10 @@ Query는 prisma(DB)기준으로 실행됨, typeDef기준이 아님
 include한다면 그것을 포함한 전부를 가져옴
 관계에 대한 연산은 비싼 연산이어서, include나 select를 쓰지 않으면 포함안됨
 
+
+mutation response
+    계속 어떤 연산에 대해 Result type을 만드는 것보다,
+    하나의 result type을 공유
 
 
 
