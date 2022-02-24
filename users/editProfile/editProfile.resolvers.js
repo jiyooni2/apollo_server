@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { protectedResolver } from "../users.utils";
 import { pipeline } from "stream";
 import path from "path";
+import { uploadToS3 } from "../../shared/shared.utils";
 
 export default {
   Mutation: {
@@ -16,6 +17,8 @@ export default {
       ) => {
         let avatarUrl = null;
         if (avatar) {
+          avatarUrl = await uploadToS3(avatar, loggedInUser.id, "avatars");
+          /*
           const { filename, createReadStream } = await avatar;
           //파일명을 충돌 방지하기 위해서
           const newFilename = `${loggedInUser.id}-${Date.now()}-${filename}`;
@@ -25,6 +28,7 @@ export default {
           );
           readStream.pipe(writeStream);
           avatarUrl = `http://localhost:4000/static/${newFilename}`;
+            */
         }
 
         const updatedUser = await client.user.update({

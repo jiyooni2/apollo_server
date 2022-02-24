@@ -265,6 +265,18 @@ mutation response
     계속 어떤 연산에 대해 Result type을 만드는 것보다,
     하나의 result type을 공유
 
+AWS
+    서버에 file을 저장하지 않음
+        서버에 저장했는데 서버를 없앨 수도 있고, 서버를 끌 때 파일이 같이 사라질 수도 있음
+    npm install aws-sdk
+
+    IAM
+        create API key
+        permission : api key로 무엇을 제어할 수 있는지
+
+    AWS.config.update를 통해서 AWS에 로그인
+    AWS file upload
+        bucket파일 이름 명시, 파일 보내면 됨
 
 
 FrontEnd

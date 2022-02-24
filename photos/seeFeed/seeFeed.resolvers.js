@@ -3,8 +3,10 @@ import client from "./../../client";
 
 export default {
   Query: {
-    seeFeed: protectedResolver((_, __, { loggedInUser }) => {
+    seeFeed: protectedResolver((_, { offset }, { loggedInUser }) => {
       client.photo.findMany({
+        take: 2,
+        skip: offset,
         where: {
           //사진의 소유자(유저)의 팔로워에 내가 있으면 보여줌
           OR: [
