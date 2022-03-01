@@ -4,7 +4,7 @@ import client from "./../../client";
 export default {
   Query: {
     seeFeed: protectedResolver((_, { offset }, { loggedInUser }) => {
-      client.photo.findMany({
+      return client.photo.findMany({
         take: 2,
         skip: offset,
         where: {

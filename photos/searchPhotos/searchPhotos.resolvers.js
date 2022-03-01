@@ -4,7 +4,7 @@ export default {
   Query: {
     searchPhotos: (_, { keyword, page }) =>
       client.photo.findMany({
-        where: { caption: { startsWith: keyword } },
+        where: { caption: { contains: keyword } },
         take: 5,
         skip: (page - 1) * 5,
       }),
